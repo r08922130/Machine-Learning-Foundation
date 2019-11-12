@@ -32,7 +32,7 @@ def error_out(s,theta):
     return 0.5 + 0.3* s *( abs(theta) -1 )
 
 def train(time,num):
-    
+    np.random.seed(time)
     x = generate_x(data_num=num)
     x = np.sort(x)
     
