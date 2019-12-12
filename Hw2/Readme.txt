@@ -3,7 +3,7 @@ Problem 6
 (a)function generate(n) :  Design a generating n point as input data with normal distribution function
 
 (b)function f(x) : Use sign(x) to create the ground truth of data. 
-	For noise, I create an array with all value 1, and first 20% of data is flipped to 	-1. Then shuffle the array and dot it to the sign(x) 
+	For noise, I create a random array with value between 0 and 1 and give 1 if the value smaller than 0.2 else 0. Then use noise * -2 + 1 to get the 20% noise array with values [1 ,-1] 
 
 Problem 7, 8
 

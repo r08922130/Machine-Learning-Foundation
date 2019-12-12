@@ -22,10 +22,18 @@ def generate_x(data_num=2000):
 
 # problem 6 (b) flips 20% of results
 def f(x):
-    length = x.shape
+    """length = x.shape
     noise = np.ones(length)
     noise[:int(length[0]/5)] *= -1    
-    np.random.shuffle(noise)
+    np.random.shuffle(noise)"""
+    noise = np.random.rand(x.shape[0])
+    #print("========noise=========")
+    
+    #print(noise)
+    noise = noise<0.2
+    noise = noise * -2 +1
+    #print("========noise=========")
+    
     #print(noise)
     return noise * sign(x)
 def error_out(s,theta):
