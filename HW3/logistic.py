@@ -13,19 +13,20 @@ def cal_gradient(w,x,y):
     gradient_all = -sigmoid(-s).reshape(-1,1)*y.reshape(-1,1)*x
     gradient_avr = np.average(gradient_all,axis=0)
     return gradient_avr
-def E_in(w,x,y):
+def err_log(w,x,y):
     s = np.dot(w,x.T)*y
-    error = -np.log(sigmoid(s))
-    error_avr = np.average(error,axis=0)
+    err = -np.log(sigmoid(s))
+    error_avr = np.average(err,axis=0)
     return error_avr
 def update_W(w,ita,gradient):
     return w- ita*gradient
-def Eout(w,x,y):
+def err0_1(w,x,y):
     s = np.dot(w,x.T)
     
     scores = sigmoid(s)
     predicts = scores>=0.5
     predicts = predicts *2 -1
+    #print(predicts!=y)
     Eout = sum(predicts!=y)
     return (Eout *1.0)/predicts.shape[0]
 
@@ -55,20 +56,20 @@ for j in range(len(is_SGD)):
 
         if is_SGD[j]:
             ## Q 20
-            x_n = x[i%x.shape[0]]
-            y_n = y[i%y.shape[0]]
+            x_n = np.array(x[i%x.shape[0]])
+            y_n = np.array(y[i%y.shape[0]])
         else :
             ## Q 19
             x_n = x
             y_n = y
         steps += [i+1]
-        E_in_history += [E_in(w,x,y)]
-        gradient = cal_gradient(w,x,y)
+        E_in_history += [err0_1(w,x,y)]
+        gradient = cal_gradient(w,x_n,y_n)
         w = update_W(w,lr[j],gradient)
-        E_out_history +=[Eout(w,test_x,test_y)]
+        E_out_history +=[err0_1(w,test_x,test_y)]
     
-    E_out = Eout(w,test_x,test_y)
-    
+    E_out = err0_1(w,test_x,test_y)
+    print("=====E_out ( 0/1 err )=====")
     print(E_out)
 plt.figure("Question 7")
 plots = plt.plot(steps[:step],E_in_history[:step],sign[0],steps[:step],E_in_history[step:],sign[1])
